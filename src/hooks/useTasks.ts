@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from './useAuth';
 import { createTask, deleteTask, subscribeUserTasks, updateTask } from '../services/tasks';
+import { sendTasksSummaryEmail } from '../services/email';
 import type { Task } from '../types/task';
 
 export function useTasks() {
@@ -45,6 +46,24 @@ export function useTasks() {
     await deleteTask(taskId);
   }, []);
 
+  const sendTasksSummary = useCallback(async () => {
+    if (!user?.email) {
+      setError('Usuario no autenticado o sin email');
+      return;
+    }
+
+    const tasksSummary = tasks
+      .map((task) => `${task.completed ? '[✓]' : '[ ]'} ${task.title}: ${task.description}`)
+      .join('\n');
+
+    try {
+      await sendTasksSummaryEmail(user.email, tasksSummary);
+      setError('');
+    } catch (err) {
+      setError('Error al enviar el resumen por email');
+    }
+  }, [user, tasks]);
+
   return {
     tasks,
     loading,
@@ -52,6 +71,7 @@ export function useTasks() {
     addTask,
     toggleTask,
     removeTask,
+    sendTasksSummary,
     setError
   };
 }

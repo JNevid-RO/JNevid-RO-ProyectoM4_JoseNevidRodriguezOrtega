@@ -6,7 +6,7 @@ import TaskList from '../components/TaskList';
 
 function DashboardPage() {
   const { user, logout } = useAuth();
-  const { tasks, loading, error, addTask, toggleTask, removeTask } = useTasks();
+  const { tasks, loading, error, addTask, toggleTask, removeTask, sendTasksSummary } = useTasks();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -14,12 +14,21 @@ function DashboardPage() {
     navigate('/login');
   };
 
+  const handleSendSummary = async () => {
+    await sendTasksSummary();
+  };
+
   return (
     <section className="app-shell">
       <div className="app-header">
         <h1>Mis tareas</h1>
         <p>Bienvenido{user?.email ? `, ${user.email}` : ''}. Crea, gestiona y sincroniza tus tareas.</p>
-        <button onClick={handleLogout}>Cerrar sesión</button>
+        <div className="dashboard-actions">
+          <button onClick={handleSendSummary} className="secondary-button">
+            Enviar resumen por email
+          </button>
+          <button onClick={handleLogout}>Cerrar sesión</button>
+        </div>
       </div>
 
       <div className="app-main">
