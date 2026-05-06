@@ -87,3 +87,57 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.task-form,
+.task-list {
+  max-width: 38rem;
+  margin: 0 auto 1.5rem;
+  width: 100%;
+}
+
+.task-form label {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.task-form textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  resize: vertical;
+}
+
+.task-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.07);
+}
+
+.task-card.completed {
+  opacity: 0.8;
+  border-left: 4px solid #16a34a;
+}
+
+.task-card__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.task-card__actions button {
+  flex: 1 1 40%;
+}
+
+.danger-button {
+  background: #dc2626;
+}
+
+button:hover {
+  opacity: 0.95;
+}
