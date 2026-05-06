@@ -2,8 +2,8 @@ import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-function LoginPage() {
-  const { login, loginWithGoogle } = useAuth();
+function RegisterPage() {
+  const { register } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,28 +14,17 @@ function LoginPage() {
     setError('');
 
     try {
-      await login(email, password);
+      await register(email, password);
       navigate('/tasks');
     } catch (err) {
-      setError('No se pudo iniciar sesión. Revisa tus credenciales.');
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setError('');
-
-    try {
-      await loginWithGoogle();
-      navigate('/tasks');
-    } catch (err) {
-      setError('Error al iniciar sesión con Google.');
+      setError('No se pudo registrar. Verifica los datos e intenta de nuevo.');
     }
   };
 
   return (
     <section className="app-shell">
       <div className="app-header">
-        <h1>Iniciar sesión</h1>
+        <h1>Crear cuenta</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
             Email
@@ -56,17 +45,14 @@ function LoginPage() {
             />
           </label>
           {error && <p className="form-error">{error}</p>}
-          <button type="submit">Entrar</button>
+          <button type="submit">Registrarme</button>
         </form>
-        <button type="button" onClick={handleGoogleLogin} className="secondary-button">
-          Continuar con Google
-        </button>
         <p>
-          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
       </div>
     </section>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

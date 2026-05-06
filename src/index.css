@@ -48,3 +48,42 @@ button {
   color: white;
   font-size: 1rem;
 }
+
+.secondary-button {
+  margin-top: 1rem;
+  width: 100%;
+  background: #0f172a;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+}
+
+.form-error {
+  color: #dc2626;
+  margin: 0;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
