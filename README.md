@@ -1,70 +1,71 @@
-# MateCode Task Manager
+# TaskFlow 🚀 (Anteriormente MateCode Task Manager)
 
-Aplicación SPA de gestión de tareas para pequeñas empresas, desarrollada con React, TypeScript y Firebase.
+Una aplicación Single Page Application (SPA) premium para la gestión avanzada de tareas, desarrollada con **React, TypeScript y Firebase**, y diseñada con una interfaz moderna basada en **Glassmorphism**.
 
-## Características
+Ideal para demostrar habilidades *Full-Stack*, manejo de estado complejo, enrutamiento, y despliegues *Serverless*.
 
-- ✅ Autenticación con email/password y Google
-- ✅ Gestión completa de tareas (CRUD) con persistencia en Firestore
-- ✅ Sincronización en tiempo real
-- ✅ Envío de resúmenes por email con AWS SES
-- ✅ Interfaz responsive y mobile-first
-- ✅ Deploy en Vercel con funciones serverless
+## ✨ Características Principales
 
-## Estructura del proyecto
+- **Diseño Premium (Glassmorphism):** Interfaz altamente interactiva, responsiva y visualmente atractiva con transiciones suaves, variables CSS y tipografía moderna (Outfit).
+- **Autenticación Segura:** Inicio de sesión y registro utilizando **Firebase Authentication** (Google OAuth y Correo/Contraseña).
+- **Gestión Avanzada de Tareas (CRUD):** 
+  - Creación, lectura, actualización y eliminación de tareas.
+  - Asignación de **Prioridad** (Alta, Media, Baja) con indicadores visuales (Badges).
+  - Asignación de **Fechas de Vencimiento** y registro automático de Fecha de Creación.
+- **Panel de Control Dinámico:** Menú de pestañas para alternar entre tareas pendientes y completadas, además de filtros para ordenar instantáneamente por creación, vencimiento o prioridad.
+- **Persistencia en la Nube:** Base de datos en tiempo real impulsada por **Firestore**, manteniendo los datos sincronizados.
+- **Notificaciones por Email:** Integración Backend con **Amazon Web Services (AWS SES)** mediante funciones Serverless de Vercel para enviar resúmenes de tareas directamente a tu bandeja de entrada.
 
-- `src/pages/` - vistas públicas y privadas
-- `src/components/` - UI reusable
-- `src/features/` - lógica de dominio del producto
-- `src/services/` - integraciones con Firebase y APIs
-- `src/hooks/` - hooks personalizados
-- `src/routes/` - router + rutas privadas (ProtectedRoute)
-- `src/types/` - tipos e interfaces compartidas
-- `src/utils/` - utilidades y validaciones
-- `functions/` - Vercel Functions para AWS SES
-- `tests/` - pruebas unitarias y de componentes
+## 📁 Estructura del Proyecto
 
-## Scripts disponibles
+- `src/pages/` - Vistas principales (HomePage, LoginPage, RegisterPage, DashboardPage).
+- `src/components/` - Componentes UI reutilizables (TaskForm, TaskList, etc).
+- `src/services/` - Conexiones externas (Firestore, Firebase Auth, API local).
+- `src/hooks/` - Lógica de estado custom (`useAuth`, `useTasks`).
+- `src/types/` - Definiciones de interfaces estáticas de TypeScript (`Task`).
+- `api/` - **Vercel Serverless Functions** configuradas para el envío de correos vía AWS SES.
+- `tests/` - Pruebas unitarias con Vitest configuradas para los componentes y servicios.
 
-- `npm run dev` - iniciar servidor de desarrollo
-- `npm run build` - compilar para producción
-- `npm run preview` - previsualizar build local
-- `npm run test` - ejecutar tests con Vitest
+## 🛠️ Stack Tecnológico
 
-## Variables de entorno
+- **Frontend:** React 18, TypeScript, Vite, React Router DOM.
+- **Backend/Serverless:** Vercel Functions (Node.js, `@vercel/node`).
+- **Base de Datos & Auth:** Firebase SDK (Firestore, Auth).
+- **Servicio de Correos:** AWS SDK (`@aws-sdk/client-ses`).
+- **Testing:** Vitest, Testing Library.
+- **Estilos:** Vanilla CSS con metodologías modernas (Variables, Flexbox, CSS Grid).
 
-Crea un archivo `.env` en la raíz con las claves necesarias:
+## 🚀 Despliegue y Configuración
 
-### Firebase
+El proyecto está diseñado para ser desplegado instantáneamente en **Vercel**. 
+El frontend servirá las páginas estáticas mientras que la carpeta `api/` se desplegará como funciones backend.
+
+### Variables de Entorno Necesarias
+Debes configurar las siguientes variables tanto en tu `.env` local como en tu panel de Vercel (en **Settings > Environment Variables**):
+
+#### Firebase (Públicas, prefijo `VITE_`)
+```env
+VITE_FIREBASE_API_KEY=tu_api_key
+VITE_FIREBASE_AUTH_DOMAIN=tu_dominio.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=tu_project_id
+VITE_FIREBASE_STORAGE_BUCKET=tu_bucket.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=tu_sender_id
+VITE_FIREBASE_APP_ID=tu_app_id
 ```
-VITE_FIREBASE_API_KEY=your_firebase_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
 
-### AWS SES
-```
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+#### AWS SES (Privadas, solo para Backend Vercel)
+```env
+AWS_ACCESS_KEY_ID=tu_aws_access_key
+AWS_SECRET_ACCESS_KEY=tu_aws_secret_key
 AWS_REGION=us-east-1
-SES_FROM_ADDRESS=noreply@yourdomain.com
+SES_FROM_ADDRESS=tu_correo_verificado_en_aws@gmail.com
 ```
 
-### Vercel API
-```
-VITE_VERCEL_API_URL=https://your-app.vercel.app
-```
+### Comandos de Desarrollo Locales
+- `npm install` - Instalar dependencias
+- `npm run dev` - Iniciar servidor de desarrollo (Vite)
+- `npm run test` - Ejecutar suite de pruebas automatizadas
+- `npm run build` - Compilar aplicación para producción
 
-## Flujo de envío de emails
-
-1. Usuario hace clic en "Enviar resumen por email" en el dashboard
-2. Frontend llama a la Vercel Function `/api/send-tasks-summary`
-3. La función serverless usa AWS SES para enviar el email
-4. El email incluye un resumen de todas las tareas del usuario
-
-## Notas
-
-Este proyecto está listo para seguir con la implementación de tests y deploy en producción.
+## 📝 Notas de AWS Sandbox
+Por defecto, las cuentas nuevas de AWS SES se encuentran en el entorno de pruebas (**Sandbox**). Si el sistema devuelve un error indicando falta de autorización, asegúrate de que el correo destinatario esté **verificado** en la consola de AWS SES, o solicita a AWS la salida a producción.
