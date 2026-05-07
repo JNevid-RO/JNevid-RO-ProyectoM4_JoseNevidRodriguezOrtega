@@ -67,5 +67,4 @@ VITE_VERCEL_API_URL=https://your-app.vercel.app
 
 ## Notas
 
-Este proyecto está listo para seguir con la implementación de tests y deploy en producción.</content>
-<parameter name="filePath">c:\Users\jnro0\OneDrive\Escritorio\M4\README.md
+Este proyecto está listo para seguir con la implementación de tests y deploy en producción.
