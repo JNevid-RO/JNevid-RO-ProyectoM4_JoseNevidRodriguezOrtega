@@ -10,6 +10,8 @@ const mockTasks: Task[] = [
     title: 'Task 1',
     description: 'Description 1',
     completed: false,
+    priority: 'media',
+    dueDate: '2023-12-31T00:00:00.000Z',
     createdAt: '2023-01-01T00:00:00.000Z',
     updatedAt: '2023-01-01T00:00:00.000Z'
   },
@@ -19,6 +21,8 @@ const mockTasks: Task[] = [
     title: 'Task 2',
     description: 'Description 2',
     completed: true,
+    priority: 'alta',
+    dueDate: '2023-12-31T00:00:00.000Z',
     createdAt: '2023-01-01T00:00:00.000Z',
     updatedAt: '2023-01-01T00:00:00.000Z'
   }
@@ -43,7 +47,7 @@ describe('TaskList', () => {
 
     render(<TaskList tasks={[]} onToggle={mockOnToggle} onDelete={mockOnDelete} />);
 
-    expect(screen.getByText('No hay tareas creadas aún.')).toBeInTheDocument();
+    expect(screen.getByText(/No hay tareas creadas aún/i)).toBeInTheDocument();
   });
 
   it('renders toggle and delete buttons for each task', () => {
@@ -52,10 +56,12 @@ describe('TaskList', () => {
 
     render(<TaskList tasks={mockTasks} onToggle={mockOnToggle} onDelete={mockOnDelete} />);
 
-    const toggleButtons = screen.getAllByText(/marcar como/i);
-    const deleteButtons = screen.getAllByText('Eliminar');
+    const completeButtons = screen.getAllByText(/Completar/i);
+    const restoreButtons = screen.getAllByText(/Restaurar/i);
+    const deleteButtons = screen.getAllByText('✕');
 
-    expect(toggleButtons).toHaveLength(2);
+    expect(completeButtons).toHaveLength(1);
+    expect(restoreButtons).toHaveLength(1);
     expect(deleteButtons).toHaveLength(2);
   });
 });

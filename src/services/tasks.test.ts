@@ -24,7 +24,9 @@ describe('tasks service', () => {
 
       const result = await createTask('user123', {
         title: 'Test Task',
-        description: 'Test Description'
+        description: 'Test Description',
+        priority: 'media',
+        dueDate: '2023-12-31'
       });
 
       expect(mockCollection).toHaveBeenCalledWith(undefined, 'tasks');
@@ -32,6 +34,8 @@ describe('tasks service', () => {
         userId: 'user123',
         title: 'Test Task',
         description: 'Test Description',
+        priority: 'media',
+        dueDate: '2023-12-31',
         completed: false,
         createdAt: 'mock-timestamp',
         updatedAt: 'mock-timestamp'
