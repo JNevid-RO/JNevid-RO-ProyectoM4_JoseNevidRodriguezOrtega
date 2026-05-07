@@ -64,7 +64,7 @@ export function useTasks() {
       await sendTasksSummaryEmail(user.email, tasksSummary);
       setError('');
     } catch (err) {
-      setError('Error al enviar el resumen por email');
+      setError('El envío falló: Tu cuenta no está autorizada para recibir correos. Contacta al administrador (nevidrodriguez01@gmail.com) para solicitar acceso.');
     }
   }, [user, tasks]);
 
