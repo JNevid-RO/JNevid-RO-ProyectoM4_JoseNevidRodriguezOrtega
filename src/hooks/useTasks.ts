@@ -53,8 +53,12 @@ export function useTasks() {
     }
 
     const tasksSummary = tasks
-      .map((task) => `${task.completed ? '[✓]' : '[ ]'} ${task.title}: ${task.description}`)
-      .join('\n');
+      .map((task) => {
+        const dueDateStr = task.dueDate ? ` (Vence: ${task.dueDate})` : '';
+        const priorityStr = `[Prioridad: ${task.priority?.toUpperCase() || 'MEDIA'}]`;
+        return `${task.completed ? '[✓]' : '[ ]'} ${priorityStr} ${task.title}${dueDateStr}\n    ↳ ${task.description}`;
+      })
+      .join('\n\n');
 
     try {
       await sendTasksSummaryEmail(user.email, tasksSummary);
