@@ -27,13 +27,13 @@ export function useTasks() {
   }, [user]);
 
   const addTask = useCallback(
-    async (title: string, description: string) => {
+    async (title: string, description: string, priority: 'baja' | 'media' | 'alta', dueDate: string) => {
       if (!user) {
         setError('Usuario no autenticado');
         return;
       }
 
-      await createTask(user.uid, { title, description });
+      await createTask(user.uid, { title, description, priority, dueDate });
     },
     [user]
   );

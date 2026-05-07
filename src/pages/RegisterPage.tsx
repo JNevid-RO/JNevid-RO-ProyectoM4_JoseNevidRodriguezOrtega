@@ -23,8 +23,9 @@ function RegisterPage() {
 
   return (
     <section className="app-shell">
-      <div className="app-header">
-        <h1>Crear cuenta</h1>
+      <div className="app-header glass-header">
+        <h1 className="gradient-text">TaskFlow</h1>
+        <p>Únete y toma el control de tu tiempo.</p>
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
             Email
@@ -47,7 +48,7 @@ function RegisterPage() {
           {error && <p className="form-error">{error}</p>}
           <button type="submit">Registrarme</button>
         </form>
-        <p>
+        <p style={{marginTop: '2rem'}}>
           ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
       </div>

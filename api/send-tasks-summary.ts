@@ -35,7 +35,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       },
       Message: {
         Subject: {
-          Data: 'Resumen de tus tareas - MateCode Task Manager'
+          Data: 'Resumen de tus tareas - TaskFlow'
         },
         Body: {
           Text: {
@@ -47,16 +47,16 @@ ${tasksSummary}
 
 ¡Sigue organizando tu día!
 
-MateCode Task Manager`
+TaskFlow`
           },
           Html: {
             Data: `
-              <h1>MateCode Task Manager</h1>
+              <h1>TaskFlow</h1>
               <p>Hola,</p>
               <p>Aquí tienes un resumen de tus tareas actuales:</p>
               <pre>${tasksSummary}</pre>
               <p>¡Sigue organizando tu día!</p>
-              <p><em>MateCode Task Manager</em></p>
+              <p><em>TaskFlow</em></p>
             `
           }
         }

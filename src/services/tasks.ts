@@ -26,6 +26,8 @@ function normalizeTaskSnapshot(docSnapshot: any): Task {
     title: data.title,
     description: data.description,
     completed: data.completed ?? false,
+    priority: data.priority || 'media',
+    dueDate: data.dueDate || '',
     createdAt,
     updatedAt
   };
@@ -44,18 +46,20 @@ export const subscribeUserTasks = (userId: string, callback: (tasks: Task[]) => 
   });
 };
 
-export const createTask = async (userId: string, task: Pick<Task, 'title' | 'description'>) => {
+export const createTask = async (userId: string, task: Pick<Task, 'title' | 'description' | 'priority' | 'dueDate'>) => {
   return addDoc(tasksCollection, {
     userId,
     title: task.title,
     description: task.description,
+    priority: task.priority,
+    dueDate: task.dueDate,
     completed: false,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
   });
 };
 
-export const updateTask = async (taskId: string, updates: Partial<Pick<Task, 'title' | 'description' | 'completed'>>) => {
+export const updateTask = async (taskId: string, updates: Partial<Pick<Task, 'title' | 'description' | 'completed' | 'priority' | 'dueDate'>>) => {
   const taskRef = doc(tasksCollection, taskId);
   return updateDoc(taskRef, {
     ...updates,

@@ -34,8 +34,9 @@ function LoginPage() {
 
   return (
     <section className="app-shell">
-      <div className="app-header">
-        <h1>Iniciar sesión</h1>
+      <div className="app-header glass-header">
+        <h1 className="gradient-text">TaskFlow</h1>
+        <p>Tu flujo de trabajo, simplificado.</p>
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
             Email
@@ -58,11 +59,12 @@ function LoginPage() {
           {error && <p className="form-error">{error}</p>}
           <button type="submit">Entrar</button>
         </form>
-        <button type="button" onClick={handleGoogleLogin} className="secondary-button">
+        <button type="button" onClick={handleGoogleLogin} className="secondary-button" style={{width: '100%', marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '0.5rem'}}>
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" />
           Continuar con Google
         </button>
-        <p>
-          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+        <p style={{marginTop: '2rem'}}>
+          ¿No tienes cuenta? <Link to="/register">Regístrate gratis</Link>
         </p>
       </div>
     </section>
