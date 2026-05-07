@@ -1,12 +1,13 @@
 import {
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useMemo,
-  useState,
-  type ReactNode
+  useState
 } from 'react';
-import { onAuthStateChanged, type User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { loginWithEmail, loginWithGoogle, logoutUser, registerWithEmail } from '../services/auth';
 
@@ -21,7 +22,7 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider(props: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -54,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [user, loading]
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

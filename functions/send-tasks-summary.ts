@@ -1,29 +1,31 @@
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 
 const sesClient = new SESClient({
   region: process.env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ''
   }
 });
 
-export default async function handler(request: Request) {
+export default async function handler(request: VercelRequest, response: VercelResponse) {
+  // Only allow POST requests
   if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return response.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { email, tasksSummary } = await request.json();
+    const { email, tasksSummary } = request.body;
 
+    // Validate input
     if (!email || !tasksSummary) {
-      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return response.status(400).json({ error: 'Missing required fields: email and tasksSummary' });
+    }
+
+    // Validate AWS credentials are available
+    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY || !process.env.SES_FROM_ADDRESS) {
+      return response.status(500).json({ error: 'AWS SES credentials not configured' });
     }
 
     const command = new SendEmailCommand({
@@ -63,15 +65,10 @@ MateCode Task Manager`
 
     await sesClient.send(command);
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return response.status(200).json({ success: true, message: 'Email sent successfully' });
   } catch (error) {
     console.error('Error sending email:', error);
-    return new Response(JSON.stringify({ error: 'Failed to send email' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return response.status(500).json({ error: 'Failed to send email', details: String(error) });
   }
 }
+
